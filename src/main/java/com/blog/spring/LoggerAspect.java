@@ -11,9 +11,9 @@ import org.springframework.stereotype.Component;
 @Component 
 public class LoggerAspect {
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(LoggerAspect.class);
 	
-	@Before(value="execution(* com.blog.spring.HomeController.*(..))", argNames = "joinPoint")
+	@Before(value="execution(* com.blog.spring.PageController.*(..))", argNames = "joinPoint")
 	public void logger(JoinPoint joinPoint){
 		logger.info("Welcome to "+joinPoint.getSignature().getName()+" page!");
 	}

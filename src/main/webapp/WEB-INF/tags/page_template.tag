@@ -1,5 +1,6 @@
 <%@tag description="Page template" pageEncoding="UTF-8"%>
 <%@attribute name="title"%>
+<%@attribute name="page"%>
 <%@attribute name="content" fragment="true" %>
 <%@attribute name="sidebar" fragment="true" %>
 
@@ -11,7 +12,7 @@
 </head>
 <body>
 
-<%@include file='commons/navbar.html'%>
+<%@include file='commons/navbar.jsp'%>
 
 <div class="container mt-4">
   <div class="row">

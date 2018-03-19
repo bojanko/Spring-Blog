@@ -1,17 +1,17 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
 	<ul class="navbar-nav">
-	  <li class="nav-item active">
-	    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+	  ${page eq 'home' ? '<li class="nav-item active">' : '<li class="nav-item">'}
+	    <a class="nav-link" href="${pageContext.servletContext.contextPath}/">Home</a>
 	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link" href="#">Features</a>
+	  ${page eq 'about' ? '<li class="nav-item active">' : '<li class="nav-item">'}
+	    <a class="nav-link" href="${pageContext.servletContext.contextPath}/about">About</a>
 	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link" href="#">Pricing</a>
+	  ${page eq 'contact' ? '<li class="nav-item active">' : '<li class="nav-item">'}
+	    <a class="nav-link" href="${pageContext.servletContext.contextPath}/contact">Contact</a>
 	  </li>
 	  <li class="nav-item dropdown">
 	    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	      Dropdown link
+	      Menu
 	    </a>
 	    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 	      <a class="dropdown-item" href="#">Action</a>
