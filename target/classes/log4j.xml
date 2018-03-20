@@ -31,6 +31,15 @@
 	<logger name="org.springframework.web">
 		<level value="info" />
 	</logger>
+	
+	
+	<!-- HIBERNATE SQL LOGGER  -->
+	<logger name="org.hibernate.tool.hbm2dll">
+		<level value="debug" />
+	</logger>
+	<logger name="org.hibernate.SQL">
+		<level value="debug" />
+	</logger>
 
 	<!-- Root Logger -->
 	<root>
