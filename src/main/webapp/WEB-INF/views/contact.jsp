@@ -10,6 +10,9 @@
 	
 	<jsp:attribute name="content">
 		<form:form method="post" modelAttribute="contact">
+			<!-- CSRF TOKEN  -->
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+			<!--  -->
 			<h3>Your name</h3>
 			<form:errors class="alert alert-danger" element="div" path="name" />
 			<form:input class="form-control" type="text" name="name" path="name"></form:input>
