@@ -33,6 +33,21 @@ public class PostDAO {
 		return ((List<Post>) ((List<?>) query.list()));
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Post> getPostsPerPage(int page){
+		Query query = getCurrentSession().createQuery("from Post");
+		List<Post> list = ((List<Post>) ((List<?>) query.list()));
+		return list.subList((page - 1) * 5, 5 * page > list.size() ? list.size() : 5 * page );
+	}	
+
+	@SuppressWarnings("unchecked")
+	public List<Post> getPostsPerPage(int page, int page_size){
+		Query query = getCurrentSession().createQuery("from Post ");
+		List<Post> list = ((List<Post>) ((List<?>) query.list()));
+		return list.subList((page - 1) * page_size,
+				page_size * page > list.size() ? list.size() : page_size * page );
+	}
+	
 	public void addPost(Post p){
 		getCurrentSession().save(p);
 	}

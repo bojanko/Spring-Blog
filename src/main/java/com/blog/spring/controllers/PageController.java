@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -45,18 +46,29 @@ public class PageController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model) {
-		List<Post> posts = postDAO.getAllPosts();
-		
-		paginator.setData(posts, 1);
-		System.err.println(paginator.getPrev());
-		System.err.println(paginator.getLink1());
-		System.err.println(paginator.getLink2());
-		System.err.println(paginator.getLink3());
-		System.err.println(paginator.getNext());
+		/*PRIBAVLJANJE POSTOVA I PROSLEDJIVANJE TEMPLEJTU*/
+		List<Post> posts = postDAO.getPostsPerPage(1);
+		paginator.setData(postDAO.getAllPosts(), 1);
+
+		model.addAttribute("posts", posts);
+		model.addAttribute("paginator", paginator );
 		
 		setBasicPageInfo(model, "home");
 		return "home";
 	}
+	/*PRIKAZ STRANICA*/
+	@RequestMapping(value = "/page/{page}", method = RequestMethod.GET)
+	public String home_page(Model model, @PathVariable(value = "page") int page) {
+		/*PRIBAVLJANJE POSTOVA I PROSLEDJIVANJE TEMPLEJTU*/
+		List<Post> posts = postDAO.getPostsPerPage(page);
+		paginator.setData(postDAO.getAllPosts(), page);
+
+		model.addAttribute("posts", posts);
+		model.addAttribute("paginator", paginator );
+		
+		setBasicPageInfo(model, "home");
+		return "home";
+	}	
 	
 	@RequestMapping(value = "/about", method = RequestMethod.GET)
 	public String about(Model model) {
@@ -91,28 +103,5 @@ public class PageController {
 		setBasicPageInfo(model, "contact");
 		model.addAttribute("success", true);
 		return "redirect:/contact";
-	}
-	
-	
-	@RequestMapping(value = "/insert", method = RequestMethod.GET)
-	public String insert(Model model) {
-		//DUMMY DATA FOR BASIC PAGE INFO
-		/*Page home_page = new Page("Welcome to home page", "Content of home page", "home");
-		Page about_page = new Page("Welcome to about page", "Content of about page", "about");
-		Page contact_page = new Page("Welcome to contact page", "Content of contact page", "contact");
-		pageDAO.addPage(home_page);
-		pageDAO.addPage(about_page);
-		pageDAO.addPage(contact_page);*/
-		
-		//DUMMY POSTS
-		/*for(int i = 1; i < 17; i++){
-			Post post = new Post();
-			post.setComments(null);
-			post.setTitle("Example post " + i);
-			post.setText("This is example post " + i);
-			postDAO.addPost(post);
-		}*/
-		
-		return "home";
 	}
 }
