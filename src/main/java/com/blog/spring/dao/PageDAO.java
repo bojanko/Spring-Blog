@@ -1,4 +1,4 @@
-package com.blog.spring;
+package com.blog.spring.dao;
 
 import javax.transaction.Transactional;
 
@@ -8,7 +8,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.blog.spring.Page;
+import com.blog.spring.models.Page;
 
 @Repository
 @Transactional

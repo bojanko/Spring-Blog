@@ -1,4 +1,6 @@
-package com.blog.spring;
+package com.blog.spring.controllers;
+
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -10,6 +12,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.blog.spring.dao.PageDAO;
+import com.blog.spring.dao.PostDAO;
+import com.blog.spring.helpers.Mailer;
+import com.blog.spring.helpers.Paginator;
+import com.blog.spring.models.ContactMessage;
+import com.blog.spring.models.Page;
+import com.blog.spring.models.Post;
+
 /**
  * Handles requests for the application pages.
  */
@@ -18,7 +28,11 @@ public class PageController {
 	@Autowired
 	private PageDAO pageDAO;
 	@Autowired
+	private PostDAO postDAO;
+	@Autowired
 	private Mailer mailer;
+	@Autowired
+	private Paginator<Post> paginator;
 	
 	private void setBasicPageInfo(Model model, String page_name){
 		/*BASIC PAGE INFO*/
@@ -31,6 +45,15 @@ public class PageController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model) {
+		List<Post> posts = postDAO.getAllPosts();
+		
+		paginator.setData(posts, 1);
+		System.err.println(paginator.getPrev());
+		System.err.println(paginator.getLink1());
+		System.err.println(paginator.getLink2());
+		System.err.println(paginator.getLink3());
+		System.err.println(paginator.getNext());
+		
 		setBasicPageInfo(model, "home");
 		return "home";
 	}
@@ -80,6 +103,15 @@ public class PageController {
 		pageDAO.addPage(home_page);
 		pageDAO.addPage(about_page);
 		pageDAO.addPage(contact_page);*/
+		
+		//DUMMY POSTS
+		/*for(int i = 1; i < 17; i++){
+			Post post = new Post();
+			post.setComments(null);
+			post.setTitle("Example post " + i);
+			post.setText("This is example post " + i);
+			postDAO.addPost(post);
+		}*/
 		
 		return "home";
 	}

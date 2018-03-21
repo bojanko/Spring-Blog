@@ -1,4 +1,4 @@
-package com.blog.spring;
+package com.blog.spring.helpers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;

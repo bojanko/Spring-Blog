@@ -1,4 +1,4 @@
-package com.blog.spring;
+package com.blog.spring.models;
 
 import javax.validation.constraints.Pattern;
 

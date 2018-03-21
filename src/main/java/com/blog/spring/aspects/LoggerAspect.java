@@ -1,4 +1,4 @@
-package com.blog.spring;
+package com.blog.spring.aspects;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -13,7 +13,7 @@ public class LoggerAspect {
 	
 	private static final Logger logger = LoggerFactory.getLogger(LoggerAspect.class);
 	
-	@Before(value="execution(* com.blog.spring.PageController.*(..))", argNames = "joinPoint")
+	@Before(value="execution(* com.blog.spring.controllers.PageController.*(..))", argNames = "joinPoint")
 	public void logger(JoinPoint joinPoint){
 		logger.info("Welcome to "+joinPoint.getSignature().getName()+" page!");
 	}
