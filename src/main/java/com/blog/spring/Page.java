@@ -41,6 +41,9 @@ public class Page {
 		page_name = pn;
 	}
 	
+	public Page(){
+	}
+	
 	public Page(String tt, String txt, String pn){
 		title = tt;
 		text = txt;

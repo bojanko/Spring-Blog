@@ -4,15 +4,12 @@
 <%@taglib prefix="temps" tagdir="/WEB-INF/tags" %>
 
 <temps:page_template>
-	<jsp:attribute name="title"><c:out value="${title}" /></jsp:attribute>
-	<jsp:attribute name="page"><c:out value="${page}" /></jsp:attribute>
 	
 	<jsp:attribute name="content">
-		example content
+		<p><c:out value="${txt}"></c:out></p>
 	</jsp:attribute>
 	
 	<jsp:attribute name="sidebar">
-		<p><c:out value="${txt}"></c:out></p>
 		example sidebar
 	</jsp:attribute>
 </temps:page_template>

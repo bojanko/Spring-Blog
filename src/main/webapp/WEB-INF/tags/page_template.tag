@@ -1,6 +1,7 @@
 <%@tag description="Page template" pageEncoding="UTF-8"%>
 <%@attribute name="title"%>
 <%@attribute name="page"%>
+<%@attribute name="txt"%>
 <%@attribute name="content" fragment="true" %>
 <%@attribute name="sidebar" fragment="true" %>
 
@@ -14,6 +15,10 @@
 
 <%@include file='commons/navbar.jsp'%>
 
+<div class="jumbotron">
+    <h1 class="text-center">${ title }</h1> 
+</div>
+
 <div class="container mt-4">
   <div class="row">
     <div class="col-lg-7 offset-lg-1">
@@ -24,6 +29,8 @@
     </div>
   </div>
 </div>
+
+<br /><br /><br />
 
 <%@include file='commons/footer.html'%>
 
