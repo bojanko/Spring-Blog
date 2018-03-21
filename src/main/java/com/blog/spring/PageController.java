@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.blog.spring.Page;
-
 /**
  * Handles requests for the application pages.
  */
@@ -19,6 +17,8 @@ import com.blog.spring.Page;
 public class PageController {
 	@Autowired
 	private PageDAO pageDAO;
+	@Autowired
+	private Mailer mailer;
 	
 	private void setBasicPageInfo(Model model, String page_name){
 		/*BASIC PAGE INFO*/
@@ -44,6 +44,7 @@ public class PageController {
 	@RequestMapping(value = "/contact", method = RequestMethod.GET)
 	public String contact(Model model) {
 		setBasicPageInfo(model, "contact");
+		model.addAttribute("success", false);
 		model.addAttribute("contact", new ContactMessage());
 		return "contact";
 	}
@@ -56,17 +57,17 @@ public class PageController {
 		/*PROVERA VALIDNOSTI FORME*/
         if (bindingResult.hasErrors()) {
         	setBasicPageInfo(model, "contact");
+        	model.addAttribute("success", false);
             return "contact";
         }
 		
-        /*OBRADA PODATAKA*/
-		System.err.println(contact.getName());
-		System.err.println(contact.getEmail());
-		System.err.println(contact.getText());
+        /*SLANJE PORUKE*/
+		mailer.sendMail(contact.getEmail(), "hi@bojanko.com",
+				"Contact from " + contact.getName(), contact.getText());
 		
 		setBasicPageInfo(model, "contact");
-		model.addAttribute("contact", new ContactMessage());
-		return "contact";
+		model.addAttribute("success", true);
+		return "redirect:/contact";
 	}
 	
 	

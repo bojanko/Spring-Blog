@@ -17,7 +17,7 @@
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
-	<annotation-driven />
+	<annotation-driven ignore-default-model-on-redirect="true" />
 	
 	<!-- ADD DATABASE  -->
 	<beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
@@ -53,6 +53,19 @@
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<!-- CONFIGURE MAILING -->
+	<beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<beans:property name="host" value="smtp.mailtrap.io" />
+		<beans:property name="port" value="2525" />
+		<beans:property name="username" value="fc5f1a232a028d" />
+		<beans:property name="password" value="8e7a13908bfd2e" />
+		<beans:property name="javaMailProperties">
+		   <beans:props>
+	       	      <beans:prop key="mail.smtp.auth">true</beans:prop>
+	       	   </beans:props>
+		</beans:property>
 	</beans:bean>
 		
 	<context:component-scan base-package="com.blog.spring" />

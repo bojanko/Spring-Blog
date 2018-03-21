@@ -10,6 +10,9 @@
 	
 	<jsp:attribute name="content">
 		<form:form method="post" modelAttribute="contact">
+			<c:if test="${success}">
+				<div class="alert alert-success">Message sent successfully!</div>
+			</c:if>
 			<!-- CSRF TOKEN  -->
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			<!--  -->
