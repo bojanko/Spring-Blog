@@ -3,10 +3,14 @@
 <%@ page session="false" %>
 <%@taglib prefix="temps" tagdir="/WEB-INF/tags" %>
 
+
 <temps:page_template>
+	<jsp:attribute name="title"><c:out value="${ post.getTitle() }" /></jsp:attribute>
+	<jsp:attribute name="page">post</jsp:attribute>
 	
 	<jsp:attribute name="content">
-		<p><c:out value="${txt}"></c:out></p>
+	<!-- SHOW POST -->
+       <p><c:out value="${ post.getText() }"/></p>
 	</jsp:attribute>
 	
 	<jsp:attribute name="sidebar">

@@ -68,7 +68,25 @@ public class PageController {
 		
 		setBasicPageInfo(model, "home");
 		return "home";
-	}	
+	}
+	/*PRIKAZ POSTA*/
+	@RequestMapping(value = "/post/{id}", method = RequestMethod.GET)
+	public String post(Model model, @PathVariable(value = "id") int id) {
+		/*PRIBAVLJANJE POSTOVA I PROSLEDJIVANJE TEMPLEJTU*/
+		Post post = postDAO.getPostById(id);
+
+		model.addAttribute("post", post);		
+		return "post";
+	}
+	/*PRIKAZ POSTOVA WIDGET*/
+	@RequestMapping(value = "/posts_widget", method = RequestMethod.GET)
+	public String posts_widget(Model model) {
+		/*PRIBAVLJANJE POSTOVA I PROSLEDJIVANJE TEMPLEJTU*/
+		List<Post> posts = postDAO.getPostsPerPage(1, 3);
+
+		model.addAttribute("posts", posts);		
+		return "posts_widget";
+	}
 	
 	@RequestMapping(value = "/about", method = RequestMethod.GET)
 	public String about(Model model) {

@@ -29,20 +29,20 @@ public class PostDAO {
 	
 	@SuppressWarnings("unchecked")
 	public List<Post> getAllPosts(){
-		Query query = getCurrentSession().createQuery("from Post");
+		Query query = getCurrentSession().createQuery("from Post p order by p.id desc");
 		return ((List<Post>) ((List<?>) query.list()));
 	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Post> getPostsPerPage(int page){
-		Query query = getCurrentSession().createQuery("from Post");
+		Query query = getCurrentSession().createQuery("from Post p order by p.id desc");
 		List<Post> list = ((List<Post>) ((List<?>) query.list()));
 		return list.subList((page - 1) * 5, 5 * page > list.size() ? list.size() : 5 * page );
 	}	
 
 	@SuppressWarnings("unchecked")
 	public List<Post> getPostsPerPage(int page, int page_size){
-		Query query = getCurrentSession().createQuery("from Post ");
+		Query query = getCurrentSession().createQuery("from Post p order by p.id desc");
 		List<Post> list = ((List<Post>) ((List<?>) query.list()));
 		return list.subList((page - 1) * page_size,
 				page_size * page > list.size() ? list.size() : page_size * page );

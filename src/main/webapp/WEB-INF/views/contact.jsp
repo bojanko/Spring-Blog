@@ -32,6 +32,6 @@
 	
 	<jsp:attribute name="sidebar">
 		<p><c:out value="${txt}"></c:out></p>
-		example sidebar
+		<jsp:include page="/posts_widget" />
 	</jsp:attribute>
 </temps:page_template>
