@@ -26,7 +26,7 @@
 			<form:errors class="alert alert-danger" element="div" path="text" />
 			<form:textarea class="form-control" rows="8" name="text" path="text"></form:textarea>
 			<br />
-			<form:button class="form-control">Send message</form:button>
+			<form:button class="btn btn-dark btn-lg btn-block">Send message</form:button>
 		</form:form>
 	</jsp:attribute>
 	
