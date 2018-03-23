@@ -1,25 +1,44 @@
 <b:beans xmlns="http://www.springframework.org/schema/security"
 		 xmlns:b="http://www.springframework.org/schema/beans"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+		 xmlns:context="http://www.springframework.org/schema/context"
+		 xsi:schemaLocation="http://www.springframework.org/schema/beans
+		 				http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/security
+						http://www.springframework.org/schema/security/spring-security.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context.xsd">
 
    <http use-expressions="true">
-      <intercept-url pattern="/**" access="isAnonymous()"/>
-      <form-login />
-      <logout />
+   <intercept-url pattern="/login" access="isAnonymous()"/>
+      <intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')"/>
+      
+      <form-login login-page='/login' default-target-url="/" 
+      		authentication-failure-url="/login?error=true" />
+      		
+      <logout logout-success-url="/" logout-url="/logout" />
+
       
       <!-- ENABLE CSRF PROTECTION -->
       <csrf />
- 
    </http>
+   
+    <context:component-scan base-package="com.blog.spring.security" />
+   
+ 	<!-- ENABLE PASSWORD ENCODER -->
+	<b:bean id="passEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" >
+		<b:constructor-arg value="11"/>
+	</b:bean>
+	
+	<!-- REGISTER CUSTOM USER SERVICE -->
+	<b:bean id="userDetailsService" class="com.blog.spring.security.CustomUserService" >
+	</b:bean>
+   
+   <!-- ENABLE AUTHENTICATION -->
    <authentication-manager>
-      <authentication-provider>
-         <user-service>
-            <user name="user1" password="user1Pass" authorities="ROLE_USER" />
-         </user-service>
+      <authentication-provider user-service-ref="userDetailsService">
+         <password-encoder ref="passEncoder"></password-encoder>
       </authentication-provider>
    </authentication-manager>
-
 
 </b:beans>

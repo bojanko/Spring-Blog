@@ -1,7 +1,11 @@
 package com.blog.spring.controllers;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +18,11 @@ import com.blog.spring.helpers.Paginator;
 import com.blog.spring.models.ContactMessage;
 import com.blog.spring.models.Page;
 import com.blog.spring.models.Post;
+import com.blog.spring.security.CustomRole;
+import com.blog.spring.security.CustomUser;
+import com.blog.spring.security.CustomUserService;
+import com.blog.spring.security.RoleDAO;
+import com.blog.spring.security.UserDAO;
 
 /**
  * Handles requests for the application pages.
@@ -24,6 +33,10 @@ public class DummyDataController {
 	private PageDAO pageDAO;
 	@Autowired
 	private PostDAO postDAO;
+	@Autowired
+	private CustomUserService userDetailsService;
+	@Autowired
+	private RoleDAO roleDAO;
 
 	@RequestMapping(value = "/insert", method = RequestMethod.GET)
 	public String insert(Model model) {
@@ -43,6 +56,21 @@ public class DummyDataController {
 			post.setText("This is example post " + i);
 			postDAO.addPost(post);
 		}*/
+		//DUMMY USER
+		/*List<CustomRole> roles = new ArrayList<CustomRole>();
+		CustomRole r_user = new CustomRole("ROLE_USER");
+		CustomRole r_admin = new CustomRole("ROLE_ADMIN");
+		roles.add(r_user);
+		roles.add(r_admin);
+		
+		roleDAO.addRole(r_user);
+		roleDAO.addRole(r_admin);
+		
+		CustomUser user = new CustomUser("admin", "password", roles);
+		userDetailsService.addUser(user);*/
+		
+		CustomUser user = (CustomUser) userDetailsService.loadUserByUsername("admin");
+		System.out.println(user.getUsername());
 		
 		return "home";
 	}
