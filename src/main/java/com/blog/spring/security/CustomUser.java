@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
@@ -21,9 +22,11 @@ public class CustomUser implements UserDetails {
 	private static final long serialVersionUID = 6326000870285971193L;
 	
 	@Column(nullable = false)
+	@NotBlank
 	private String username;
 	
 	@Column(nullable = false)
+	@NotBlank
 	private String password;
 	
 	@OneToMany(fetch = FetchType.EAGER, targetEntity = CustomRole.class, orphanRemoval = true)

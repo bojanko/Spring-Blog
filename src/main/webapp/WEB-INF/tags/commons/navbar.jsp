@@ -1,3 +1,5 @@
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
 	<ul class="navbar-nav">
 	  ${page eq 'home' ? '<li class="nav-item active">' : '<li class="nav-item">'}
@@ -14,9 +16,26 @@
 	      Menu
 	    </a>
 	    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-	      <a class="dropdown-item" href="#">Action</a>
-	      <a class="dropdown-item" href="#">Another action</a>
-	      <a class="dropdown-item" href="#">Something else here</a>
+		    <security:authorize access="isAnonymous()">
+		    	<a class="dropdown-item" href="${pageContext.servletContext.contextPath}/login">Log In</a>
+		    </security:authorize>
+		    
+		    <security:authorize access="hasRole('ROLE_USER')">
+		    	<a class="dropdown-item" href="${pageContext.servletContext.contextPath}/profile">My Profile</a>
+		    </security:authorize>
+		    
+		    <security:authorize access="hasRole('ROLE_ADMIN')">
+		    	<a class="dropdown-item" href="${pageContext.servletContext.contextPath}/admin">Admin Menu</a>
+		    </security:authorize>
+		    
+		    <security:authorize access="isAuthenticated()">
+		    	<br />
+			    <form name="f" method="post" action="${pageContext.servletContext.contextPath}/logout">
+			      	<!-- CSRF TOKEN  -->
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+			      	<button class="btn btn-dark btn-lg btn-block">Log Out</button>
+			    </form>
+		    </security:authorize>
 	    </div>
 	  </li>
 	</ul>
