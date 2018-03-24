@@ -18,6 +18,7 @@
 	    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 		    <security:authorize access="isAnonymous()">
 		    	<a class="dropdown-item" href="${pageContext.servletContext.contextPath}/login">Log In</a>
+		    	<a class="dropdown-item" href="${pageContext.servletContext.contextPath}/register">Register</a>
 		    </security:authorize>
 		    
 		    <security:authorize access="hasRole('ROLE_USER')">
