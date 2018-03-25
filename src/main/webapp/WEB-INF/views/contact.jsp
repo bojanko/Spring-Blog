@@ -3,6 +3,7 @@
 <%@ page session="false" %>
 <%@taglib prefix="temps" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="/WEB-INF/tld/escaper" prefix="esc"%>
 
 <temps:page_template>
 	<jsp:attribute name="title"><c:out value="${title}" /></jsp:attribute>
@@ -31,7 +32,7 @@
 	</jsp:attribute>
 	
 	<jsp:attribute name="sidebar">
-		<p><c:out value="${txt}"></c:out></p>
+		<p>${esc:escaper(txt)}</p>
 		<jsp:include page="/posts_widget" />
 	</jsp:attribute>
 </temps:page_template>

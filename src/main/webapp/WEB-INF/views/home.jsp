@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 <%@taglib prefix="temps" tagdir="/WEB-INF/tags" %>
+<%@ taglib uri="/WEB-INF/tld/escaper" prefix="esc"%>
 
 
 <temps:page_template>
@@ -15,7 +16,7 @@
        <c:out value="${ post.getTitle() }"/>
        </a></h2>
        
-       <p><c:out value="${ post.getText() }"/></p>
+       <p>${ esc:escaper(post.getText()) }</p>
        
        <a href="${ pageContext.servletContext.contextPath }/post/${ post.getId() }"
        class="btn btn-dark btn-lg btn-block">Show post</a>

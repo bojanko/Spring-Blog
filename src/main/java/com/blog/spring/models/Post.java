@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
 public class Post {
 	@Id
@@ -20,6 +22,7 @@ public class Post {
 	}
 	
 	@Column(nullable = false)
+	@NotBlank(message = "Title is required!")
 	private String title;
 	
 	public String getTitle(){
@@ -31,6 +34,7 @@ public class Post {
 	}
 	
 	@Column(nullable = false)
+	@NotBlank(message = "Post text is required!")
 	private String text;
 	
 	public String getText(){

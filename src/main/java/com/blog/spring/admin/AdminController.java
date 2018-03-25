@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.blog.spring.dao.CommentDAO;
 import com.blog.spring.dao.PageDAO;
+import com.blog.spring.dao.PostDAO;
+import com.blog.spring.helpers.Paginator;
 import com.blog.spring.models.Comment;
 import com.blog.spring.models.Page;
+import com.blog.spring.models.Post;
 import com.blog.spring.profile.AdminRequest;
 import com.blog.spring.profile.AdminRequestDAO;
 import com.blog.spring.security.CustomRole;
@@ -46,6 +49,12 @@ public class AdminController {
 	
 	@Autowired
 	PageDAO pageDAO;
+	
+	@Autowired
+	PostDAO postDAO;
+	
+	@Autowired
+	Paginator<Post> paginator;
 	
 	@RequestMapping(value = "/moderate", method = RequestMethod.GET)
 	public String moderate(Model model) {
@@ -145,5 +154,84 @@ public class AdminController {
 		model.addAttribute("success", true);
 		
 		return "admin/page";
+	}
+	
+	
+	
+	@RequestMapping(value = "/posts", method = RequestMethod.GET)
+	public String posts(Model model) {
+		/*GET POSTSS*/
+		List<Post> posts = new ArrayList<Post>();
+		posts = postDAO.getPostsPerPage(1, 10);
+		paginator.setData(postDAO.getAllPosts(), 10, 1);
+		
+		model.addAttribute("posts", posts);
+		model.addAttribute("paginator", paginator);
+
+		return "admin/posts";
+	}
+	/*PAGES*/
+	@RequestMapping(value = "/posts/page/{page}", method = RequestMethod.GET)
+	public String posts_page(Model model, @PathVariable(value = "page") int page) {
+		/*GET POSTSS*/
+		List<Post> posts = new ArrayList<Post>();
+		posts = postDAO.getPostsPerPage(page, 10);
+		paginator.setData(postDAO.getAllPosts(), 10, page);
+		
+		model.addAttribute("posts", posts);
+		model.addAttribute("paginator", paginator);
+
+		return "admin/posts";
+	}
+	/*DELETE POST*/
+	@RequestMapping(value = "/posts/delete/{id}", method = RequestMethod.GET)
+	public String posts_delete(Model model, @PathVariable(value = "id") int id) {
+		postDAO.deletePost(postDAO.getPostById(id));
+
+		return "redirect:/admin/posts";
+	}
+	/*UPDATE POST*/
+	@RequestMapping(value = "/posts/edit/{id}", method = RequestMethod.GET)
+	public String posts_update(Model model, @PathVariable(value = "id") int id) {
+		Post post = postDAO.getPostById(id);
+		
+		model.addAttribute("post", post);
+		model.addAttribute("success", false);
+
+		return "admin/post";
+	}
+	/*HANDLE UPDATE POST*/
+	@RequestMapping(value = "/posts/edit/{id}", method = RequestMethod.POST)
+	public String posts_update_submit(@Valid @ModelAttribute("post") Post post,
+			BindingResult bindingResult, Model model, @PathVariable(value = "id") int id) {
+		Post db_post = postDAO.getPostById(id);
+		db_post.setTitle(post.getTitle());
+		db_post.setText(post.getText());
+		
+		postDAO.updatePost(db_post);		
+		
+		model.addAttribute("post", post);
+		model.addAttribute("success", true);
+
+		return "admin/post";
+	}
+	/*INSERT POST*/
+	@RequestMapping(value = "/posts/insert", method = RequestMethod.GET)
+	public String posts_insert(Model model) {
+		model.addAttribute("post", new Post());
+		model.addAttribute("success", false);
+
+		return "admin/post_insert";
+	}
+	/*HANDLE INSERT POST*/
+	@RequestMapping(value = "/posts/insert", method = RequestMethod.POST)
+	public String posts_insert_submit(@Valid @ModelAttribute("post") Post post,
+			BindingResult bindingResult, Model model) {
+		postDAO.addPost(post);	
+		
+		model.addAttribute("post", new Post());
+		model.addAttribute("success", true);
+
+		return "admin/post_insert";
 	}
 }

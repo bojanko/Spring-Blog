@@ -4,6 +4,7 @@
 <%@taglib prefix="temps" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="/WEB-INF/tld/escaper" prefix="esc"%>
 
 
 <temps:page_template>
@@ -19,7 +20,7 @@
 	</c:if>
 	
 	<!-- SHOW POST -->
-       <p><c:out value="${ post.getText() }"/></p>
+       <p>${ esc:escaper(post.getText()) }</p>
        <br /><br />
        
     <!-- LIST OF COMMENTS -->
