@@ -44,4 +44,10 @@ public class CustomUserService implements UserDetailsService {
 		
 		userDAO.addUser(user);
 	}
+	
+	public void setPassword(CustomUser user, String un){
+		user.setPassword(passEncoder.encode(un));
+		
+		userDAO.updateUser(user);
+	}
 }

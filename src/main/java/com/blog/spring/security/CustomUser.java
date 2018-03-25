@@ -21,9 +21,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 groups = {com.blog.spring.security.CustomUser.Group2.class})
 public class CustomUser implements UserDetails, Serializable {
 	/*VALIDATION GROUPS*/
-	private interface Group1{
+	public interface Group1{
 	}
-	private interface Group2{
+	public interface Group2{
 	}
 
 	@Id
