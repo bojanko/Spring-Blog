@@ -2,6 +2,8 @@ package com.blog.spring.models;
 
 import javax.persistence.*;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
 public class Page {
 	@Id
@@ -9,6 +11,7 @@ public class Page {
 	private int id;
 	
 	@Column(nullable = false)
+	@NotBlank(message = "Title is required!")
 	private String title;
 	
 	public String getTitle(){
@@ -20,6 +23,7 @@ public class Page {
 	}
 	
 	@Column(nullable = false)
+	@NotBlank(message = "Text is required!")
 	private String text;
 	
 	public String getText(){
@@ -39,6 +43,10 @@ public class Page {
 	
 	public void setPageName(String pn){
 		page_name = pn;
+	}
+	
+	public String getPage_name(){
+		return page_name;
 	}
 	
 	public Page(){

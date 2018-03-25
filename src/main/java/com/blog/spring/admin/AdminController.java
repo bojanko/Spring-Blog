@@ -3,15 +3,21 @@ package com.blog.spring.admin;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.blog.spring.dao.CommentDAO;
+import com.blog.spring.dao.PageDAO;
 import com.blog.spring.models.Comment;
+import com.blog.spring.models.Page;
 import com.blog.spring.profile.AdminRequest;
 import com.blog.spring.profile.AdminRequestDAO;
 import com.blog.spring.security.CustomRole;
@@ -37,6 +43,9 @@ public class AdminController {
 	
 	@Autowired
 	AdminRequestDAO adminRequestDAO;
+	
+	@Autowired
+	PageDAO pageDAO;
 	
 	@RequestMapping(value = "/moderate", method = RequestMethod.GET)
 	public String moderate(Model model) {
@@ -102,5 +111,39 @@ public class AdminController {
 		adminRequestDAO.updateAdminRequest(request);
 		
 		return "redirect:/admin/requests";
+	}
+	
+	
+
+	@RequestMapping(value = "/page/{page}", method = RequestMethod.GET)
+	public String edit_page(Model model, @PathVariable(value = "page") String page) {
+		Page page_obj = pageDAO.getPageByName(page);
+		
+		model.addAttribute("page_obj", page_obj);
+		model.addAttribute("success", false);
+		
+		return "admin/page";
+	}
+	/*HANDLE UPDATE*/
+	@RequestMapping(value = "/page/{page}", method = RequestMethod.POST)
+	public String edit_page_submit(@Valid @ModelAttribute("page_obj") Page page_obj,
+			BindingResult bindingResult, Model model, @PathVariable(value = "page") String page) {
+		
+		/*PROVERA VALIDNOSTI FORME*/
+        if (bindingResult.hasErrors()) {
+        	model.addAttribute("success", false);
+            return "admin/page";
+        }
+          
+        /*UPDATE PAGE IN DATABASE*/
+        Page db_page = pageDAO.getPageByName(page);
+        db_page.setText(page_obj.getText());
+        db_page.setTitle(page_obj.getTitle());
+        pageDAO.updatePage(db_page);
+		
+		model.addAttribute("page_obj", page_obj);
+		model.addAttribute("success", true);
+		
+		return "admin/page";
 	}
 }

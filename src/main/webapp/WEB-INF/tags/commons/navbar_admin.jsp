@@ -14,9 +14,22 @@
 	    <a class="nav-link" href="${pageContext.servletContext.contextPath}/admin/posts">
 	    Posts</a>
 	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link" href="${pageContext.servletContext.contextPath}/admin/pages">
-	    Pages</a>
+	  
+	  <li class="nav-item dropdown">
+	    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	      Pages
+	    </a>
+	    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	    <security:authorize access="hasRole('ROLE_ADMIN')">
+	    
+	    	<a class="dropdown-item" href="${pageContext.servletContext.contextPath}/admin/page/home">
+	    	Home</a>
+			<a class="dropdown-item" href="${pageContext.servletContext.contextPath}/admin/page/about">
+			About</a>
+	    	<a class="dropdown-item" href="${pageContext.servletContext.contextPath}/admin/page/contact">
+	    	Contact</a>
+	    </security:authorize>
+	    </div>
 	  </li>
 
 	  <li class="nav-item dropdown">
@@ -27,7 +40,6 @@
 	    <security:authorize access="hasRole('ROLE_ADMIN')">
 	    
 	    	<a class="dropdown-item" href="${pageContext.servletContext.contextPath}/profile">My Profile</a>
-			<br />
 			<a class="dropdown-item" href="${pageContext.servletContext.contextPath}/">Back to blog</a>
 	    	<br />
 		    <form name="f" method="post" action="${pageContext.servletContext.contextPath}/logout">
