@@ -26,6 +26,12 @@ public class PostDAO {
 	public Post getPostById(int id){
 		return (Post) getCurrentSession().get(Post.class, id);
 	}
+	public Post getPostByIdWithComments(int id){
+		Query query = getCurrentSession().createQuery("from Post p left join FETCH p.comments c WHERE"
+				+ " p.id = :id");
+		query.setParameter("id", id);
+		return (Post) query.uniqueResult();
+	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Post> getAllPosts(){

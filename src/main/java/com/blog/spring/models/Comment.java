@@ -4,6 +4,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 public class Comment {
@@ -16,6 +19,7 @@ public class Comment {
 	}
 	
 	@Column(nullable = false)
+	@NotBlank(message = "Name is required!")
 	private String name;
 
 	public String getName(){
@@ -27,6 +31,8 @@ public class Comment {
 	}
 	
 	@Column(nullable = true)
+	@NotBlank(message = "Email is required!")
+	@Pattern( regexp = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$", message = "Email is invalid!")
 	private String email;
 	
 	public String getEmail(){
@@ -38,6 +44,7 @@ public class Comment {
 	}
 	
 	@Column(nullable = false)
+	@NotBlank(message = "Message is required!")
 	private String text;
 	
 	public String getText(){

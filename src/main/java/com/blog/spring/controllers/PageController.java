@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.blog.spring.dao.CommentDAO;
 import com.blog.spring.dao.PageDAO;
 import com.blog.spring.dao.PostDAO;
 import com.blog.spring.helpers.Mailer;
 import com.blog.spring.helpers.Paginator;
+import com.blog.spring.models.Comment;
 import com.blog.spring.models.ContactMessage;
 import com.blog.spring.models.Page;
 import com.blog.spring.models.Post;
@@ -30,6 +32,8 @@ public class PageController {
 	private PageDAO pageDAO;
 	@Autowired
 	private PostDAO postDAO;
+	@Autowired
+	private CommentDAO commentDAO;
 	@Autowired
 	private Mailer mailer;
 	@Autowired
@@ -73,13 +77,46 @@ public class PageController {
 	@RequestMapping(value = "/post/{id}", method = RequestMethod.GET)
 	public String post(Model model, @PathVariable(value = "id") int id) {
 		/*PRIBAVLJANJE POSTOVA I PROSLEDJIVANJE TEMPLEJTU*/
-		Post post = postDAO.getPostById(id);
-
-		model.addAttribute("post", post);		
+		Post post = postDAO.getPostByIdWithComments(id);
+		
+		model.addAttribute("comments", post.getComments());
+		model.addAttribute("post", post);
+		model.addAttribute("success", false);
+		model.addAttribute("comment", new Comment());
+		
+		return "post";
+	}
+	/*OBRADA KOMENTARA*/
+	@RequestMapping(value = "/post/{id}", method = RequestMethod.POST)
+	public String post_comment(@Valid @ModelAttribute("comment") Comment comment,
+			BindingResult bindingResult,Model model, @PathVariable(value = "id") int id) {
+		/*PRIBAVLJANJE POSTOVA I PROSLEDJIVANJE TEMPLEJTU*/
+		Post post = postDAO.getPostByIdWithComments(id);
+		
+		/*PROVERA VALIDNOSTI FORME*/
+        if (bindingResult.hasErrors()) {
+        	model.addAttribute("comments", post.getComments());
+        	model.addAttribute("post", post);
+        	model.addAttribute("success", false);
+            return "post";
+        }
+        
+        /*UNOS KOMENTARA*/
+        comment.setAllowed(false);
+        post.getComments().add(comment);
+        
+        commentDAO.addComment(comment);
+        postDAO.updatePost(post);
+        
+        model.addAttribute("comments", post.getComments());
+		model.addAttribute("post", post);
+		model.addAttribute("success", true);
+		model.addAttribute("comment", new Comment());
+		
 		return "post";
 	}
 	/*PRIKAZ POSTOVA WIDGET*/
-	@RequestMapping(value = "/posts_widget", method = RequestMethod.GET)
+	@RequestMapping(value = "/posts_widget")
 	public String posts_widget(Model model) {
 		/*PRIBAVLJANJE POSTOVA I PROSLEDJIVANJE TEMPLEJTU*/
 		List<Post> posts = postDAO.getPostsPerPage(1, 3);
@@ -120,6 +157,7 @@ public class PageController {
 		
 		setBasicPageInfo(model, "contact");
 		model.addAttribute("success", true);
-		return "redirect:/contact";
+		model.addAttribute("contact", new ContactMessage());
+		return "contact";
 	}
 }
