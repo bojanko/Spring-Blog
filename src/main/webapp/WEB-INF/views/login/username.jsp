@@ -9,17 +9,14 @@
 	<jsp:attribute name="page">register</jsp:attribute>
 	
 	<jsp:attribute name="content">
-		<form name='f' action="${flowExecutionUrl}" method="post">
+		<form:form name='f' action="${flowExecutionUrl}" method="post" modelAttribute="user">
 			<!-- CSRF TOKEN  -->
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			<!--  -->
 			
-			<c:if test="${ param.error }">
-				<div class="alert alert-danger">Username already used!</div>
-			</c:if>
-			
 			<h3>Your username</h3>
-			<input class="form-control" type="text" name='username' value=''/>
+			<form:errors class="alert alert-danger" element="div" path="username" />
+			<form:input class="form-control" type="text" name="username" path="username"></form:input>
 			<br />
 					
 			<div class="container mt-4">
@@ -35,7 +32,7 @@
 			  </div>
 			</div>
 
-		</form>
+		</form:form>
 	</jsp:attribute>
 	
 	<jsp:attribute name="sidebar">

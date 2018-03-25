@@ -39,9 +39,13 @@
 	<aop:aspectj-autoproxy proxy-target-class="false"/>
 	
     <!-- WEBFLOWS -->
-	<webflow:flow-registry id="flowRegistry">
+	<webflow:flow-registry id="flowRegistry" flow-builder-services="flowBuilderServices">
 	    <webflow:flow-location path="/WEB-INF/flows/register.xml" />
 	</webflow:flow-registry>
+	
+	<webflow:flow-builder-services id="flowBuilderServices" validator="validator" />
+	
+	<beans:bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
 	
 	<webflow:flow-executor id="flowExecutor" />
 	

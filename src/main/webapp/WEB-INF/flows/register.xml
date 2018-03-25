@@ -3,14 +3,20 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="
       	http://www.springframework.org/schema/webflow
-      	http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+      	http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd">
+      	
+    <var name="user" class="com.blog.spring.security.CustomUser"/>
 
-	<view-state id="username" view="/WEB-INF/views/login/username.jsp">
+	<view-state id="username" view="/WEB-INF/views/login/username.jsp" model="user"
+		validation-hints="'group1'">
 	    <transition on="check" to="password"/>
 	</view-state>
 	
-	<view-state id="password" view="/WEB-INF/views/login/password.jsp">
-	    <transition on="register" to="success"/>
+	<view-state id="password" view="/WEB-INF/views/login/password.jsp" model="user"
+		validation-hints="'group2'">
+	    <transition on="register" to="success">
+	    	<evaluate expression="userDetailsService.addUser(user)" />
+	    </transition>
 	</view-state>
 	 
 	<end-state id="success" view="/WEB-INF/views/login/success.jsp"/>
@@ -18,7 +24,7 @@
 	<end-state id="failure" view="/WEB-INF/views/login/failure.jsp"/>
 	
 	<global-transitions>
-	    <transition on="cancel" to="failure"/>
+	    <transition on="cancel" to="failure" validate="false"/>
 	</global-transitions>
 
 </flow>

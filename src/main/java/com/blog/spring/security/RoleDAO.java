@@ -20,7 +20,7 @@ public class RoleDAO {
 	
 	public CustomRole getRoleByName(String name){
 		Query query = getCurrentSession().createQuery("from CustomRole r where r.role = :name");
-		query.setParameter("role", name);
+		query.setParameter("name", name);
 		return (CustomRole) query.uniqueResult();
 	}
 	

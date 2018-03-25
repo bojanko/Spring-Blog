@@ -69,9 +69,6 @@ public class DummyDataController {
 		CustomUser user = new CustomUser("admin", "password", roles);
 		userDetailsService.addUser(user);*/
 		
-		CustomUser user = (CustomUser) userDetailsService.loadUserByUsername("admin");
-		System.out.println(user.getUsername());
-		
 		return "home";
 	}
 }
