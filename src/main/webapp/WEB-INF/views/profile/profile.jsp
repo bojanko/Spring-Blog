@@ -3,6 +3,7 @@
 <%@ page session="false" %>
 <%@taglib prefix="temps" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
 <temps:page_template>
 	<jsp:attribute name="title">Profile page</jsp:attribute>
@@ -42,10 +43,15 @@
 	    </c:forEach>
 	    
     	<br />
-	    <form name="f" method="post" action="${pageContext.servletContext.contextPath}/profile/admin_rights">
-	      	<!-- CSRF TOKEN  -->
-			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-	      	<button class="btn btn-dark btn-lg btn-block">Request admin rights</button>
-	    </form>
+    	<c:if test="${request}">
+	    	<security:authorize access="!hasRole('ROLE_ADMIN')">
+			    <form name="f" method="post" action="
+			    	${pageContext.servletContext.contextPath}/profile/admin_rights">
+			      	<!-- CSRF TOKEN  -->
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+			      	<button class="btn btn-dark btn-lg btn-block">Request admin rights</button>
+			    </form>
+		    </security:authorize>
+	    </c:if>
 	</jsp:attribute>
 </temps:page_template>

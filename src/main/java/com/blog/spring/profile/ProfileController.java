@@ -23,6 +23,8 @@ import com.blog.spring.security.CustomUserService;
 public class ProfileController {
 	@Autowired
 	CustomUserService userService;
+	@Autowired
+	AdminRequestDAO adminRequestDAO;
 	
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String profile(Principal principal, Model model) {
@@ -31,6 +33,16 @@ public class ProfileController {
 		model.addAttribute("role",
 				userService.loadUserByUsername(principal.getName()).getAuthorities());
 		model.addAttribute("success", false);
+		
+		/*CHECK IF ADMIN REQUEST IS SENT*/
+		AdminRequest request = adminRequestDAO.getAdminRequestByUser(
+				(CustomUser) userService.loadUserByUsername(principal.getName()));
+		if(request == null){
+			model.addAttribute("request", true);
+		}
+		else{
+			model.addAttribute("request", false);
+		}
 		
 		return "profile/profile";
 	}
@@ -58,5 +70,18 @@ public class ProfileController {
 				userService.loadUserByUsername(principal.getName()).getAuthorities());
 		
 		return "profile/profile";
+	}
+	
+	/*ADMIN REQUEST*/
+	@RequestMapping(value = "/admin_rights", method = RequestMethod.POST)
+	public String admin_request(Principal principal, Model model) {
+		/*SAVE REQUEST*/
+		AdminRequest request = new AdminRequest();
+		request.setUser((CustomUser) userService.loadUserByUsername(principal.getName()));
+		request.setApproved(false);
+		
+		adminRequestDAO.addAdminRequest(request);
+		
+		return "redirect:/profile";
 	}
 }
