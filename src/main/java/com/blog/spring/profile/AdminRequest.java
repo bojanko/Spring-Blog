@@ -14,6 +14,10 @@ public class AdminRequest {
 	@GeneratedValue
 	private int id;
 	
+	public int getId(){
+		return id;
+	}
+	
 	@OneToOne(targetEntity = CustomUser.class, orphanRemoval = true)
 	private CustomUser user;
 	
@@ -25,14 +29,14 @@ public class AdminRequest {
 		user = u;
 	}
 	
-	@Column(nullable = false)
-	private boolean approved;
+	@Column(nullable = true)
+	private Boolean approved;
 	
-	public boolean getApproved(){
+	public Boolean getApproved(){
 		return approved;
 	}
 	
-	public void setApproved(boolean a){
+	public void setApproved(Boolean a){
 		approved = a;
 	}
 	

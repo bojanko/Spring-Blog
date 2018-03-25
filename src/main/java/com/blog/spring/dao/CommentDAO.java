@@ -22,6 +22,10 @@ public class CommentDAO {
 	protected Session getCurrentSession(){
 		return sessionFactory.getCurrentSession();
 	}
+	
+	public Comment getCommentById(int id){
+		return (Comment) getCurrentSession().get(Comment.class, id);
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<Comment> getAllComments(){

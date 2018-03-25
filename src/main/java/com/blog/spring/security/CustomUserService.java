@@ -50,4 +50,8 @@ public class CustomUserService implements UserDetailsService {
 		
 		userDAO.updateUser(user);
 	}
+	
+	public void updateUser(CustomUser user){
+		userDAO.updateUser(user);
+	}
 }

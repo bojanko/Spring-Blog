@@ -30,10 +30,12 @@
 			    <div class="col-lg-6">
 					<button class="btn btn-dark btn-lg btn-block"
 						name="_eventId_cancel" value="cancel">Cancel</button>
+						<br />
 			    </div>
 			    <div class="col-lg-6">
 					<button class="btn btn-dark btn-lg btn-block"
 						name="_eventId_register" value="register">Register</button>
+						<br />
 			    </div>
 			  </div>
 			</div>

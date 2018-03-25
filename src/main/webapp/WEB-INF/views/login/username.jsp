@@ -24,10 +24,12 @@
 			    <div class="col-lg-6">
 					<button class="btn btn-dark btn-lg btn-block"
 						name="_eventId_cancel" value="cancel">Cancel</button>
+						<br />
 			    </div>
 			    <div class="col-lg-6">
 					<button class="btn btn-dark btn-lg btn-block"
 						name="_eventId_check" value="check">Check</button>
+						<br />
 			    </div>
 			  </div>
 			</div>

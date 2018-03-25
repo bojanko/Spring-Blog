@@ -27,4 +27,8 @@ public class RoleDAO {
 	public void addRole(CustomRole r){
 		getCurrentSession().save(r);
 	}
+	
+	public void updateRole(CustomRole r){
+		getCurrentSession().update(r);
+	}
 }

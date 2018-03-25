@@ -10,9 +10,9 @@
 						http://www.springframework.org/schema/context/spring-context.xsd">
 
    <http use-expressions="true">
-      <intercept-url pattern="/**" access="permitAll"/>
-      <intercept-url pattern="/profile" access="isAuthenticated()"/>
       <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+      <intercept-url pattern="/profile" access="isAuthenticated()"/>
+      <intercept-url pattern="/**" access="permitAll"/>
       
       <form-login login-page='/login'
       		default-target-url="/"

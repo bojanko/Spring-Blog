@@ -102,7 +102,7 @@ public class PageController {
         }
         
         /*UNOS KOMENTARA*/
-        comment.setAllowed(false);
+        comment.setAllowed(null);
         post.getComments().add(comment);
         
         commentDAO.addComment(comment);

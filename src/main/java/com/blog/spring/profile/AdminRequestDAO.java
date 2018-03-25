@@ -1,5 +1,7 @@
 package com.blog.spring.profile;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.hibernate.Query;
@@ -27,6 +29,18 @@ public class AdminRequestDAO {
 		return (AdminRequest) query.uniqueResult();
 	}
 	
+	public AdminRequest getAdminRequestById(int id){
+		Query query= sessionFactory.getCurrentSession().createQuery("from AdminRequest where id=:id");
+		query.setParameter("id", id);
+		return (AdminRequest) query.uniqueResult();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<AdminRequest> getAllAdminRequests(){
+		Query query= sessionFactory.getCurrentSession().createQuery("from AdminRequest");
+		return ((List<AdminRequest>) ((List<?>) query.list()));
+	}
+	
 	public void addAdminRequest(AdminRequest a){
 		getCurrentSession().save(a);
 	}
@@ -37,5 +51,12 @@ public class AdminRequestDAO {
 	
 	public void deleteAdminRequest(AdminRequest a){
 		getCurrentSession().delete(a);
+	}
+	
+	public void deleteAdminRequestById(int id){
+		Query query= sessionFactory.getCurrentSession()
+				.createQuery("delete from AdminRequest where id=:id");
+		query.setParameter("id", id);
+		query.executeUpdate();
 	}
 }

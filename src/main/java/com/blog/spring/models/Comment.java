@@ -55,14 +55,14 @@ public class Comment {
 		text = t;
 	}
 	
-	@Column(nullable = false)
-	private boolean allowed;
+	@Column(nullable = true)
+	private Boolean allowed;
 	
-	public boolean getAllowed(){
+	public Boolean getAllowed(){
 		return allowed;
 	}
 	
-	public void setAllowed(boolean a){
+	public void setAllowed(Boolean a){
 		allowed = a;
 	}
 	

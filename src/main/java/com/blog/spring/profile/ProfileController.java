@@ -78,7 +78,7 @@ public class ProfileController {
 		/*SAVE REQUEST*/
 		AdminRequest request = new AdminRequest();
 		request.setUser((CustomUser) userService.loadUserByUsername(principal.getName()));
-		request.setApproved(false);
+		request.setApproved(null);
 		
 		adminRequestDAO.addAdminRequest(request);
 		

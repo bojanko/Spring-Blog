@@ -26,7 +26,8 @@
 		    </security:authorize>
 		    
 		    <security:authorize access="hasRole('ROLE_ADMIN')">
-		    	<a class="dropdown-item" href="${pageContext.servletContext.contextPath}/admin">Admin Menu</a>
+		    	<a class="dropdown-item" href="${pageContext.servletContext.contextPath}/admin/moderate">
+		    	Admin Menu</a>
 		    </security:authorize>
 		    
 		    <security:authorize access="isAuthenticated()">
