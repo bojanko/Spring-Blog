@@ -1,0 +1,30 @@
+.active.page-item .page-link{
+	background-color: #343a40;
+	border-color: #343a40;
+}
+
+.page-link{
+	color: #1d2124;
+}
+
+.page-link:hover{
+	color: #1d2124;
+}
+
+.page-link:focus{
+	border-color: #ced4da;
+	box-shadow: 0px 0px 0px 0.2rem rgba(52,58,64,0.5);
+}
+
+.form-control:focus{
+	border-color: #ced4da;
+	box-shadow: 0px 0px 0px 0.2rem rgba(52,58,64,0.5);
+}
+
+.dropdown-menu{
+	padding:8px;
+}
+
+.dropdown-menu form{
+	margin-bottom: 0;
+}

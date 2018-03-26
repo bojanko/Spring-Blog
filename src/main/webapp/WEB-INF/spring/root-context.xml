@@ -1,8 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		
+	<!-- ADD DATABASE  -->
+	<beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<beans:property name="driverClassName" value="org.hsqldb.jdbcDriver"/>
+		<beans:property name="url" value="jdbc:hsqldb:hsql://localhost/EclipseDB"/>
+		<beans:property name="username" value="SA"/>
+		<beans:property name="password" value=""/>
+	</beans:bean>
+	
+	<!-- CONFIGURE HIBERNATE  -->
+	<beans:bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<beans:property name="dataSource" ref="dataSource"/>
+		<beans:property name="packagesToScan" value="com.blog.spring"/>
+		<beans:property name="hibernateProperties">
+			<beans:props>
+				<beans:prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</beans:prop>
+				<beans:prop key="hibernate.hbm2ddl.auto">update</beans:prop>
+			</beans:props>
+		</beans:property>
+	</beans:bean>
+	
+	<!-- CONFIGURE TRANSACTIONS  -->
+	<beans:bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<beans:property name="sessionFactory" ref="sessionFactory"/>
+	</beans:bean>
+	
+	<tx:annotation-driven transaction-manager="transactionManager" mode="proxy" proxy-target-class="true" />	
+
+	<!-- CONFIGURE MAILING -->
+	<beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<beans:property name="host" value="smtp.mailtrap.io" />
+		<beans:property name="port" value="2525" />
+		<beans:property name="username" value="fc5f1a232a028d" />
+		<beans:property name="password" value="8e7a13908bfd2e" />
+		<beans:property name="javaMailProperties">
+		   <beans:props>
+	       	      <beans:prop key="mail.smtp.auth">true</beans:prop>
+	       	   </beans:props>
+		</beans:property>
+	</beans:bean>
+
 </beans>
